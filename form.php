@@ -13,21 +13,21 @@
 	</header>
 	<form action="form_process.php" method="post">
 		<p>Usuario: <input type="text" name="user" /></p>
-		<p>Contrase&ntilde;a: <input type="password" name="user" /></p>
+		<p>Contrase&ntilde;a: <input type="password" name="pass" /></p>
 		<p>Aficiones:</p>
-		<p><input type="checkbox" name="futbol" value="futbol" />Fútbol</p>
-		<p><input type="checkbox" name="baloncesto" value="baloncesto" />Baloncesto</p>
-		<p><input type="checkbox" name="balonmano" value="balonmano" />Balonmano</p>
+		<p><input type="checkbox" name="futbol" />Fútbol</p>
+		<p><input type="checkbox" name="baloncesto" />Baloncesto</p>
+		<p><input type="checkbox" name="balonmano" />Balonmano</p>
 		<p>Sexo:</p>
-		<p><input type="radio" name="sexo" value="hombre" required="required" checked="checked" />Hombre</p>
-		<p><input type="radio" name="sexo" value="mujer" required="required" />Mujer</p>
+		<p><input type="radio" name="sexo" value="H" required="required" checked="checked" />Hombre</p>
+		<p><input type="radio" name="sexo" value="M" required="required" />Mujer</p>
 		<p>Provincia:
-			<select name="Provincia">
+			<select name="provincia">
 				<option value="14">Córdoba</option>
 				<option value="41">Sevilla</option>
 			</select>
 		</p>
-		<textarea>Comentarios...</textarea>
+		<textarea cols="45" rows="5" name="comentarios">Comentarios...</textarea>
 		<p></p><input type="submit" value="Enviar" /></p>
 	</form>
 </body>
