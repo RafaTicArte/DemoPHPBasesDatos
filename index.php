@@ -15,6 +15,9 @@
 		<p>
 			<a href="form.php">Ejemplo formulario</a>
 		</p>
+		<p>
+			<a href="table_data.php">Ver datos</a>
+		</p>
 	</nav>
 </body>
 </html>
