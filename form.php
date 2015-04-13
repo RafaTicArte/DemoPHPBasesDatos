@@ -8,9 +8,7 @@
 	<meta name="viewport" content="width=device-width; initial-scale=1.0">
 </head>
 <body>
-	<header>
-		<h1>Demo PHP</h1>
-	</header>
+<?php require_once('header.php'); ?>
 	<form action="form_process.php" method="post">
 		<p>Usuario: <input type="text" name="user" /></p>
 		<p>Contrase&ntilde;a: <input type="password" name="pass" /></p>

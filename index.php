@@ -8,12 +8,10 @@
 	<meta name="viewport" content="width=device-width; initial-scale=1.0">
 </head>
 <body>
-	<header>
-		<h1>Demo PHP</h1>
-	</header>
+<?php require_once('header.php'); ?>
 	<nav>
 		<p>
-			<a href="form.php">Ejemplo formulario</a>
+			<a href="form.php">Insertar datos</a>
 		</p>
 		<p>
 			<a href="table_data.php">Ver datos</a>

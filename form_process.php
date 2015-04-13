@@ -1,3 +1,13 @@
+<?php /* Procesar variables de entrada del formulario */
+$user = (isset($_POST['user'])) ? trim(strip_tags($_POST['user'])) : "";
+$pass = (isset($_POST['pass'])) ? trim(strip_tags($_POST['pass'])) : "";
+$futbol = (isset($_POST['futbol'])) ? "Futbol" : "";
+$baloncesto = (isset($_POST['baloncesto'])) ? "Baloncesto" : "";
+$balonmano = (isset($_POST['balonmano'])) ? "Balonmano" : "";
+$sexo = (isset($_POST['sexo'])) ? trim(strip_tags($_POST['sexo'])) : "";
+$provincia = (isset($_POST['provincia'])) ? trim(strip_tags($_POST['provincia'])) : "";
+$comentarios = (isset($_POST['comentarios'])) ? htmlentities(trim($_REQUEST["comentarios"])) : "";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,20 +18,7 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
 </head>
 <body>
-    <header>
-        <h1>Demo PHP</h1>
-    </header>
-
-<?php /* Procesar variables de entrada del formulario */
-$user = (isset($_POST['user'])) ? $_POST['user'] : "";
-$pass = (isset($_POST['pass'])) ? $_POST['pass'] : "";
-$futbol = (isset($_POST['futbol'])) ? "Futbol" : "";
-$baloncesto = (isset($_POST['baloncesto'])) ? "Baloncesto" : "";
-$balonmano = (isset($_POST['balonmano'])) ? "Balonmano" : "";
-$sexo = (isset($_POST['sexo'])) ? $_POST['sexo'] : "";
-$provincia = (isset($_POST['provincia'])) ? $_POST['provincia'] : "";
-$comentarios = (isset($_POST['comentarios'])) ? $_POST['comentarios'] : "";
-?>
+<?php require_once('header.php'); ?>
 
 <?php /* Mostrar datos en HTML */ ?>
 <table border="1">
@@ -41,7 +38,7 @@ $comentarios = (isset($_POST['comentarios'])) ? $_POST['comentarios'] : "";
         <td>Provincia</td><td><?php echo $provincia; ?></td>
     </tr>
     <tr>
-        <td>Comentarios</td><td><?php echo $comentarios; ?></td>
+        <td>Comentarios</td><td><?php echo html_entity_decode($comentarios); ?></td>
     </tr>
 </table>
 

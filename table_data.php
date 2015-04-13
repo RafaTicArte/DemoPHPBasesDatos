@@ -1,3 +1,6 @@
+<?php /* Procesar variables de entrada */
+$get_user = (isset($_GET['user'])) ? trim(strip_tags($_GET['user'])) : "";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,14 +11,11 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
 </head>
 <body>
-    <header>
-        <h1>Demo PHP</h1>
-    </header>
-    
+<?php require_once('header.php'); ?>
     <table border="1">
         <tr>
             <th>Id</th>
-            <th>Usuario</th>
+            <th>Usuario <a href="table_data.php?user=asc">ASC</a> <a href="table_data.php?user=des">DES</a></th>
             <th>Contrase&ntilde;a</th>
             <th>Futbol</th>
             <th>Baloncesto</th>
@@ -41,13 +41,16 @@ try {
     $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );   
 
     // Recuperar datos de la base de datos
-    $db_sentence = $pdo->query('SELECT * FROM '.$db_table);
+    $db_order = '';
+    if ($get_user == 'asc') $db_order = 'ORDER BY user ASC';
+	if ($get_user == 'des') $db_order = 'ORDER BY user DESC';
+    $db_sentence = $pdo->query('SELECT * FROM '.$db_table.' '.$db_order);
 
     // Comprobar el resultado de la ejecución
     if ( $db_sentence == false ) {
         // Error en la sentencia
         echo '<p>Error al recuperar los datos</p>';
-    } elseif ( $db_sentence->fetchColumn() == 0) {
+    } elseif ( $db_sentence->rowCount() == 0) {
         // Ningún dato recuperado
         echo '<tr><td colspan="9">No hay datos.</td></tr>';
     } else {
