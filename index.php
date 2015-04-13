@@ -10,11 +10,11 @@
 <body>
 <?php require_once('header.php'); ?>
 	<nav>
-		<p>
-			<a href="form.php">Insertar datos</a>
-		</p>
-		<p>
-			<a href="table_data.php">Ver datos</a>
+		<h2>Men&uacute;</h2>
+		<ul>
+			<li><a href="form.php">Insertar datos</a></li>
+			<li><a href="table_data.php">Ver datos</a></li>
+			<li><a href="xml_data.php">Exportar datos a XML</a></li>
 		</p>
 	</nav>
 </body>

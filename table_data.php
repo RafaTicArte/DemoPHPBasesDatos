@@ -24,7 +24,7 @@ $get_user = (isset($_GET['user'])) ? trim(strip_tags($_GET['user'])) : "";
             <th>Provincia</th>
             <th>Comentarios</th>
         </tr>
-<?php /* Almacenar datos en Base de Datos */ 
+<?php /* Leer datos de Base de Datos */ 
 $db_host = 'localhost';
 $db_user = 'root';
 $db_pass = '';
