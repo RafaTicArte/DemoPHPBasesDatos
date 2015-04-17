@@ -1,13 +1,13 @@
 <?php 
 /* Procesar las variables de entrada del formulario */
-$user = (isset($_POST['user'])) ? trim(strip_tags($_POST['user'])) : "";
-$pass = (isset($_POST['pass'])) ? trim(strip_tags($_POST['pass'])) : "";
-$futbol = (isset($_POST['futbol'])) ? "Futbol" : "";
-$baloncesto = (isset($_POST['baloncesto'])) ? "Baloncesto" : "";
-$balonmano = (isset($_POST['balonmano'])) ? "Balonmano" : "";
-$sexo = (isset($_POST['sexo'])) ? trim(strip_tags($_POST['sexo'])) : "";
-$provincia = (isset($_POST['provincia'])) ? trim(strip_tags($_POST['provincia'])) : "";
-$comentarios = (isset($_POST['comentarios'])) ? htmlentities(trim($_REQUEST["comentarios"])) : "";
+$post_user = (isset($_POST['user'])) ? trim(strip_tags($_POST['user'])) : '';
+$post_pass = (isset($_POST['pass'])) ? trim(strip_tags($_POST['pass'])) : '';
+$post_futbol = (isset($_POST['futbol'])) ? "Futbol" : '';
+$post_baloncesto = (isset($_POST['baloncesto'])) ? "Baloncesto" : '';
+$post_balonmano = (isset($_POST['balonmano'])) ? "Balonmano" : '';
+$post_sexo = (isset($_POST['sexo'])) ? trim(strip_tags($_POST['sexo'])) : '';
+$post_provincia = (isset($_POST['provincia'])) ? trim(strip_tags($_POST['provincia'])) : '';
+$post_comentarios = (isset($_POST['comentarios'])) ? htmlentities(trim($_REQUEST["comentarios"])) : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,22 +29,22 @@ require_once('header.php');
 ?>
 <table border="1">
    <tr>
-      <td>Usuario</td><td><?php echo $user; ?></td>
+      <td>Usuario</td><td><?php echo $post_user; ?></td>
    </tr>
    <tr>
-      <td>Contraseña</td><td><?php echo $pass; ?></td>
+      <td>Contraseña</td><td><?php echo $post_pass; ?></td>
    </tr>
    <tr>
-      <td>Aficiones</td><td><?php echo $futbol . " " . $baloncesto . " " . $balonmano; ?></td>
+      <td>Aficiones</td><td><?php echo $post_futbol . " " . $post_baloncesto . " " . $post_balonmano; ?></td>
    </tr>
    <tr>
-      <td>Sexo</td><td><?php echo $sexo; ?></td>
+      <td>Sexo</td><td><?php echo $post_sexo; ?></td>
    </tr>
    <tr>
-      <td>Provincia</td><td><?php echo $provincia; ?></td>
+      <td>Provincia</td><td><?php echo $post_provincia; ?></td>
    </tr>
    <tr>
-      <td>Comentarios</td><td><?php echo html_entity_decode($comentarios); ?></td>
+      <td>Comentarios</td><td><?php echo html_entity_decode($post_comentarios); ?></td>
    </tr>
 </table>
 
@@ -65,14 +65,14 @@ try {
    // bindParam para asignar valores en el momento de la ejecución
    $db_sentence = $pdo->prepare('INSERT INTO '.$db_table.' (user, pass, futbol, baloncesto, balonmano, sexo, provincia, comentarios)
                                  VALUES ( :user, :pass, :futbol, :baloncesto, :balonmano, :sexo, :provincia, :comentarios)');
-   $db_sentence->bindParam(':user', $user);
-   $db_sentence->bindParam(':pass', $pass);
-   $db_sentence->bindParam(':futbol', $futbol);
-   $db_sentence->bindParam(':baloncesto', $baloncesto);
-   $db_sentence->bindParam(':balonmano', $balonmano);
-   $db_sentence->bindParam(':sexo', $sexo);
-   $db_sentence->bindParam(':provincia', $provincia);
-   $db_sentence->bindParam(':comentarios', $comentarios);
+   $db_sentence->bindParam(':user', $post_user);
+   $db_sentence->bindParam(':pass', $post_pass);
+   $db_sentence->bindParam(':futbol', $post_futbol);
+   $db_sentence->bindParam(':baloncesto', $post_baloncesto);
+   $db_sentence->bindParam(':balonmano', $post_balonmano);
+   $db_sentence->bindParam(':sexo', $post_sexo);
+   $db_sentence->bindParam(':provincia', $post_provincia);
+   $db_sentence->bindParam(':comentarios', $post_comentarios);
    $db_sentence->execute();
 
    // Comprobar el resultado de la ejecución

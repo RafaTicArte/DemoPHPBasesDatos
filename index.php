@@ -18,7 +18,7 @@ require_once('header.php');
    <h2>Men&uacute;</h2>
    <ul>
       <li><a href="form.php">Insertar datos</a></li>
-      <li><a href="table_data.php">Ver datos</a></li>
+      <li><a href="select_data.php">Ver datos</a></li>
       <li><a href="xml_data.php">Exportar datos a XML</a></li>
    </ul>
 </nav>

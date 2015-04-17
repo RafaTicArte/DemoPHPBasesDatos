@@ -9,7 +9,7 @@
 </head>
 <body>
 <?php require_once('header.php'); ?>
-	<form action="form_process.php" method="post">
+	<form action="insert_data.php" method="post">
 		<p>Usuario: <input type="text" name="user" /></p>
 		<p>Contrase&ntilde;a: <input type="password" name="pass" /></p>
 		<p>Aficiones:</p>
