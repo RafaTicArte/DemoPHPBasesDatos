@@ -59,10 +59,10 @@ try {
    if ( $db_sentence->errorCode() != 0 ) {
       // Error en la sentencia
       $db_error = $db_sentence->errorInfo();
-      echo '<tr><td colspan="9">Error al recuperar los datos: '. $db_error[2] .'</td></tr>';
+      echo '<tr><td colspan="10">Error al recuperar los datos: '. $db_error[2] .'</td></tr>';
    } elseif ( $db_sentence->rowCount() == 0) {
       // Ningún dato recuperado
-      echo '<tr><td colspan="9">No hay datos.</td></tr>';
+      echo '<tr><td colspan="10">No hay datos.</td></tr>';
    } else {
       // Leer datos recuperados
       while ($row = $db_sentence->fetch()) {

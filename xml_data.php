@@ -27,6 +27,8 @@ try {
    if ( $db_sentence->errorCode() != 0 ) {
       // Error en la sentencia
       $xml->startElement("error_db");
+      $db_error = $db_sentence->errorInfo();
+      $xml->writeRaw($db_error[2]);
       $xml->endElement();
     } elseif ( $db_sentence->rowCount() == 0) {
       // Ningún dato recuperado
