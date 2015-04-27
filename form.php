@@ -9,7 +9,7 @@
 </head>
 <body>
 <?php require_once('header.php'); ?>
-	<form action="insert_data.php" method="post">
+	<form action="insert_data.php" method="post" accept-charset="utf-8">
 		<p>Usuario: <input type="text" name="user" /></p>
 		<p>Contrase&ntilde;a: <input type="password" name="pass" /></p>
 		<p>Aficiones:</p>

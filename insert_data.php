@@ -7,7 +7,7 @@ $post_baloncesto = (isset($_POST['baloncesto'])) ? "Baloncesto" : '';
 $post_balonmano = (isset($_POST['balonmano'])) ? "Balonmano" : '';
 $post_sexo = (isset($_POST['sexo'])) ? trim(strip_tags($_POST['sexo'])) : '';
 $post_provincia = (isset($_POST['provincia'])) ? trim(strip_tags($_POST['provincia'])) : '';
-$post_comentarios = (isset($_POST['comentarios'])) ? htmlentities(trim($_REQUEST["comentarios"])) : '';
+$post_comentarios = (isset($_POST['comentarios'])) ? htmlentities(trim($_POST["comentarios"]), ENT_HTML5, 'UTF-8') : '';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -61,18 +61,21 @@ try {
    // Asginar el modo de error Silencio para chequear nosotros mismos los errores
    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );   
 
+   // Asignar la codificación de caracteres a UTF-8
+   $pdo->exec("SET NAMES 'utf8'");
+
    // Insertar los datos con parámetros preparados 
    // bindParam para asignar valores en el momento de la ejecución
    $db_sentence = $pdo->prepare('INSERT INTO '.$db_table.' (user, pass, futbol, baloncesto, balonmano, sexo, provincia, comentarios)
                                  VALUES ( :user, :pass, :futbol, :baloncesto, :balonmano, :sexo, :provincia, :comentarios)');
-   $db_sentence->bindParam(':user', $post_user);
-   $db_sentence->bindParam(':pass', $post_pass);
-   $db_sentence->bindParam(':futbol', $post_futbol);
-   $db_sentence->bindParam(':baloncesto', $post_baloncesto);
-   $db_sentence->bindParam(':balonmano', $post_balonmano);
-   $db_sentence->bindParam(':sexo', $post_sexo);
-   $db_sentence->bindParam(':provincia', $post_provincia);
-   $db_sentence->bindParam(':comentarios', $post_comentarios);
+   $db_sentence->bindParam(':user', $post_user, PDO::PARAM_STR);
+   $db_sentence->bindParam(':pass', $post_pass, PDO::PARAM_STR);
+   $db_sentence->bindParam(':futbol', $post_futbol, PDO::PARAM_STR);
+   $db_sentence->bindParam(':baloncesto', $post_baloncesto, PDO::PARAM_STR);
+   $db_sentence->bindParam(':balonmano', $post_balonmano, PDO::PARAM_STR);
+   $db_sentence->bindParam(':sexo', $post_sexo, PDO::PARAM_STR);
+   $db_sentence->bindParam(':provincia', $post_provincia, PDO::PARAM_INT);
+   $db_sentence->bindParam(':comentarios', $post_comentarios, PDO::PARAM_STR);
    $db_sentence->execute();
 
    // Comprobar el resultado de la ejecución

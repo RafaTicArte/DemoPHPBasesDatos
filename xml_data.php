@@ -1,4 +1,7 @@
 <?php
+/* Procesar las variables de entrada */
+$get_file = (isset($_GET['file'])) ? trim(strip_tags($_GET['file'])) : '';
+
 // Cargar las variables de conexión a la base de datos
 require_once('connection.php');
 
@@ -72,7 +75,7 @@ try {
          $xml->endElement();
          
          $xml->startElement("comentarios");
-         $xml->writeRaw($row['comentarios']);
+         $xml->writeRaw(html_entity_decode($row['comentarios'], ENT_HTML5, 'UTF-8'));
          $xml->endElement();
          
          $xml->endElement();
@@ -95,6 +98,10 @@ catch(PDOException $e) {
 $xml->endElement();
 
 // Enviar el documento al navegador
-header('Content-type: text/xml');
+if ( $get_file == 'download' ) {
+   // Esta cabecera sólo es necesaria si se desea descargar como archivo
+   header('Content-disposition: attachment; filename=datos.xml');
+}
+header('Content-type: application/xml;charset=utf-8');
 $xml->flush();
 ?>

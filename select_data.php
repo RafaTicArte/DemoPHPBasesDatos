@@ -45,6 +45,9 @@ try {
    // Asginar el modo de error Silencio para chequear nosotros mismos los errores
    $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );   
 
+   // Asignar la codificación de caracteres a UTF-8
+   $pdo->exec("SET NAMES 'utf8'");
+
    // Preparar la ordenación de los datos
    $db_order = '';
    if ($get_ord_user == 'asc') $db_order = 'ORDER BY user ASC';
