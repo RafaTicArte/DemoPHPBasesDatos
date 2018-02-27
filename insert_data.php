@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* Procesar las variables de entrada del formulario */
 $post_user = (isset($_POST['user'])) ? trim(strip_tags($_POST['user'])) : '';
 $post_pass = (isset($_POST['pass'])) ? trim(strip_tags($_POST['pass'])) : '';
@@ -12,44 +12,68 @@ $post_comentarios = (isset($_POST['comentarios'])) ? htmlentities(trim($_POST["c
 <!DOCTYPE html>
 <html lang="es">
 <head>
+   <!-- Meta tags -->
    <meta charset="utf-8">
-   <title>DemoPHP</title>
    <meta name="description" content="Demo PHP">
    <meta name="author" content="Rafa Morales">
-   <meta name="viewport" content="width=device-width; initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+   <!-- Title -->
+   <title>DemoPHP</title>
 </head>
 <body>
+
+<!-- Abrir "container" -->
+<div class="container">
+
+<!-- Abrir "card" -->
+<div class="card">
+
+<div class="card-header">
 <?php
 // Cargar el fichero que contiene la cabecera de la página
-require_once('header.php'); 
+require_once('header.php');
 ?>
+</div>
 
-<?php 
-/* Mostrar los datos del formulario en una tabla */ 
+<div class="card-body">
+<?php
+/* Mostrar los datos del formulario en una tabla antes de insertarlos */
 ?>
-<table border="1">
-   <tr>
-      <td>Usuario</td><td><?php echo $post_user; ?></td>
-   </tr>
-   <tr>
-      <td>Contraseña</td><td><?php echo $post_pass; ?></td>
-   </tr>
-   <tr>
-      <td>Aficiones</td><td><?php echo $post_futbol . " " . $post_baloncesto . " " . $post_balonmano; ?></td>
-   </tr>
-   <tr>
-      <td>Sexo</td><td><?php echo $post_sexo; ?></td>
-   </tr>
-   <tr>
-      <td>Provincia</td><td><?php echo $post_provincia; ?></td>
-   </tr>
-   <tr>
-      <td>Comentarios</td><td><?php echo html_entity_decode($post_comentarios); ?></td>
-   </tr>
+<table class="table table-striped">
+   <thead class="thead-dark">
+      <tr>
+         <th>Campo</th><th>Valor</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>Usuario</td><td><?php echo $post_user; ?></td>
+      </tr>
+      <tr>
+         <td>Contraseña</td><td><?php echo $post_pass; ?></td>
+      </tr>
+      <tr>
+         <td>Aficiones</td><td><?php echo $post_futbol . " " . $post_baloncesto . " " . $post_balonmano; ?></td>
+      </tr>
+      <tr>
+         <td>Sexo</td><td><?php echo $post_sexo; ?></td>
+      </tr>
+      <tr>
+         <td>Provincia</td><td><?php echo $post_provincia; ?></td>
+      </tr>
+      <tr>
+         <td>Comentarios</td><td><?php echo html_entity_decode($post_comentarios); ?></td>
+      </tr>
+   </tbody>
 </table>
 
-<?php 
-/* Almacenar datos del formulario en la base de datos */ 
+
+<?php
+/* Almacenar datos del formulario en la base de datos */
 
 // Cargar las variables de conexión a la base de datos
 require_once('connection.php');
@@ -59,12 +83,12 @@ try {
    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
 
    // Asginar el modo de error Silencio para chequear nosotros mismos los errores
-   $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );   
+   $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );
 
    // Asignar la codificación de caracteres a UTF-8
    $pdo->exec("SET NAMES 'utf8'");
 
-   // Insertar los datos con parámetros preparados 
+   // Insertar los datos con parámetros preparados
    // bindParam para asignar valores en el momento de la ejecución
    $db_sentence = $pdo->prepare('INSERT INTO '.$db_table.' (user, pass, futbol, baloncesto, balonmano, sexo, provincia, comentarios)
                                  VALUES ( :user, :pass, :futbol, :baloncesto, :balonmano, :sexo, :provincia, :comentarios)');
@@ -80,10 +104,10 @@ try {
 
    // Comprobar el resultado de la ejecución
    if ( $db_sentence->errorCode() == 0 ) {
-      echo '<p>Datos insertados correctamente</p>'; 
+      echo '<div class="alert alert-success" role="alert">Datos insertados correctamente</div>';
    } else {
       $db_error = $db_sentence->errorInfo();
-      echo '<p>Error al insertar los datos: ' . $db_error[2] . '</p>';
+      echo '<div class="alert alert-danger" role="alert">Error al insertar los datos: ' . $db_error[2] . '</div>';
    }
 
    // Cerrar la conexión a la base de datos
@@ -91,12 +115,20 @@ try {
 }
 catch(PDOException $e) {
    // Mostrar el error
-   echo '<p>Error en la base de datos:</p>';
-   echo '<p>' . $e->getMessage() . '</p>';
+   echo '<div class="alert alert-danger" role="alert">Error en la base de datos:'. $e->getMessage() . '</div>';
    // Parar la ejecución completa de la página
    // exit();
 }
 ?>
+</div>
 
+<!-- Cerrar "card" -->
+</div>
+
+<a class="btn btn-primary" href="form.php" role="button">Volver al formulario</a>
+<a class="btn btn-primary" href="index.php" role="button">Volver al &iacute;ndice</a>
+
+<!-- Cerrar "container" -->
+</div>
 </body>
 </html>
