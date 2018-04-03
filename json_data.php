@@ -10,12 +10,12 @@ try {
    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
 
    // Asginar el modo de error Silencio para chequear nosotros mismos los errores
-   $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );   
+   $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );
 
    // Asignar la codificación de caracteres a UTF-8
    $pdo->exec("SET NAMES 'utf8'");
 
-   // Recuperar datos con parámetros preparados 
+   // Recuperar datos con parámetros preparados
    // bindParam para asignar valores en el momento de la ejecución
    $db_sentence = $pdo->prepare('SELECT * FROM '.$db_table);
    $db_sentence->execute();
@@ -34,7 +34,8 @@ try {
          );
       } else {
       // Leer datos recuperados
-      while ( $row = $db_sentence->fetch() ) {
+      $result = $db_sentence->fetchAll(PDO::FETCH_ASSOC);
+      foreach ($result as $row) {
          $json_data[] = array(
             'id' => $row['id'],
             'user' => $row['user'],
@@ -50,7 +51,7 @@ try {
             );
       }
    }
-    
+
    // Cerrar la conexión a la base de datos
    $pdo = null;
 }

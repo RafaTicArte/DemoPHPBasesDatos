@@ -1,5 +1,6 @@
 <?php
 /* Procesar las variables de entrada del formulario */
+$get_update_id = (isset($_GET['update_id'])) ? trim(strip_tags($_GET['update_id'])) : '';
 $post_user = (isset($_POST['user'])) ? trim(strip_tags($_POST['user'])) : '';
 $post_pass = (isset($_POST['pass'])) ? trim(strip_tags($_POST['pass'])) : '';
 $post_futbol = (isset($_POST['futbol'])) ? "Futbol" : '';
@@ -51,6 +52,9 @@ require_once('header.php');
    </thead>
    <tbody>
       <tr>
+         <td>Id</td><td><?php echo $get_update_id; ?></td>
+      </tr>
+      <tr>
          <td>Usuario</td><td><?php echo $post_user; ?></td>
       </tr>
       <tr>
@@ -90,8 +94,11 @@ try {
 
    // Insertar los datos con parámetros preparados
    // bindParam para asignar valores en el momento de la ejecución
-   $db_sentence = $pdo->prepare('INSERT INTO '.$db_table.' (user, pass, futbol, baloncesto, balonmano, sexo, provincia, comentarios)
-                                 VALUES ( :user, :pass, :futbol, :baloncesto, :balonmano, :sexo, :provincia, :comentarios)');
+   $db_sentence = $pdo->prepare('UPDATE '.$db_table.'
+                                 SET user=:user, pass=:pass, futbol=:futbol, baloncesto=:baloncesto,
+                                     balonmano=:balonmano, sexo=:sexo, provincia=:provincia, comentarios=:comentarios
+                                 WHERE id=:id');
+   $db_sentence->bindParam(':id', $get_update_id, PDO::PARAM_INT);
    $db_sentence->bindParam(':user', $post_user, PDO::PARAM_STR);
    $db_sentence->bindParam(':pass', $post_pass, PDO::PARAM_STR);
    $db_sentence->bindParam(':futbol', $post_futbol, PDO::PARAM_STR);
@@ -103,8 +110,11 @@ try {
    $db_sentence->execute();
 
    // Comprobar el resultado de la ejecución
-   if ( $db_sentence->errorCode() == 0 ) {
-      echo '<div class="alert alert-success" role="alert">Datos insertados correctamente</div>';
+   if ( $db_sentence->errorCode() == 0 and $db_sentence->rowCount() >= 1 ) {
+      echo '<div class="alert alert-success" role="alert">Datos actualizados correctamente</div>';
+   } else if ( $db_sentence->errorCode() == 0 and $db_sentence->rowCount() == 0 ) {
+      // No hay errores pero no se han actualizados filas
+      echo '<div class="alert alert-danger" role="alert">Ese dato no existe en la base de datos</div>';
    } else {
       $db_error = $db_sentence->errorInfo();
       echo '<div class="alert alert-danger" role="alert">Error al insertar los datos: ' . $db_error[2] . '</div>';
@@ -125,7 +135,8 @@ catch(PDOException $e) {
 <!-- Cerrar "card" -->
 </div>
 
-<a class="btn btn-primary" href="insert_form.php" role="button">Volver al formulario</a>
+<a class="btn btn-primary" href="update_form.php?update_id=<?php echo $get_update_id ?>" role="button">Volver al formulario</a>
+<a class="btn btn-primary" href="select_data.php" role="button">Volver al listado</a>
 <a class="btn btn-primary" href="index.php" role="button">Volver al &iacute;ndice</a>
 
 <!-- Cerrar "container" -->

@@ -54,7 +54,7 @@ if ( $get_delete_id == '' ) {
       // bindParam para asignar valores en el momento de la ejecución
       $db_sentence = $pdo->prepare('DELETE FROM '.$db_table.'
                                     WHERE id=:id');
-      $db_sentence->bindParam(':id', $get_delete_id);
+      $db_sentence->bindParam(':id', $get_delete_id, PDO::PARAM_INT);
       $db_sentence->execute();
 
       // Comprobar el resultado de la ejecución

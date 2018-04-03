@@ -26,7 +26,7 @@
             <nav>
                <h2>Men&uacute;</h2>
                <ul class="nav flex-column">
-                  <li class="nav-item"><a class="nav-link" href="form.php">Insertar datos</a></li>
+                  <li class="nav-item"><a class="nav-link" href="insert_form.php">Insertar datos</a></li>
                   <li class="nav-item"><a class="nav-link" href="select_data.php">Ver datos</a></li>
                   <li class="nav-item"><a class="nav-link" href="xml_data.php">Ver datos XML</a></li>
                   <li class="nav-item"><a class="nav-link" href="xml_data.php?file=download">Descargar datos XML</a></li>

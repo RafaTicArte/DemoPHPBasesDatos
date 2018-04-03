@@ -34,11 +34,11 @@ require_once('header.php');
 
 <div class="card-body">
 
-<table class="table table-striped">
+<table class="table table-striped table-sm">
     <thead class="thead-dark">
    <tr>
       <th>Id</th>
-      <th>Usuario <a href="select_data.php?ord_user=asc">ASC</a> <a href="select_data.php?ord_user=des">DES</a></th>
+      <th>Usuario <br /><a href="select_data.php?ord_user=asc">ASC</a> <a href="select_data.php?ord_user=des">DES</a></th>
       <th>Contrase&ntilde;a</th>
       <th>Futbol</th>
       <th>Baloncesto</th>
@@ -47,6 +47,7 @@ require_once('header.php');
       <th>Provincia</th>
       <th>Comentarios</th>
       <th>Eliminar</th>
+      <th>Actualizar</th>
    </tr>
 </thead>
 
@@ -100,6 +101,7 @@ try {
          echo '<td>' . $row['provincia'] . '</td>';
          echo '<td>' . $row['comentarios'] . '</td>';
          echo '<td><a href="delete_data.php?delete_id=' . $row['id'] . '">Eliminar</td>';
+         echo '<td><a href="update_form.php?update_id=' . $row['id'] . '">Actualizar</td>';
          echo '</tr>';
       }
    }

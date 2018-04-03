@@ -11,7 +11,7 @@ $xml->openURI("php://output");
 $xml->startDocument();
 $xml->setIndent(true);
 
-// Crear el elemento raíz
+// Crear el elemento raíz 'usuarios'
 $xml->startElement('usuarios');
 
 try {
@@ -19,9 +19,9 @@ try {
    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
 
    // Asginar el modo de error Silencio para chequear nosotros mismos los errores
-   $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );   
+   $pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT );
 
-   // Recuperar datos con parámetros preparados 
+   // Recuperar datos con parámetros preparados
    // bindParam para asignar valores en el momento de la ejecución
    $db_sentence = $pdo->prepare('SELECT * FROM '.$db_table);
    $db_sentence->execute();
@@ -39,7 +39,9 @@ try {
       $xml->endElement();
     } else {
       // Leer datos recuperados
-      while ($row = $db_sentence->fetch()) {
+      $result = $db_sentence->fetchAll(PDO::FETCH_ASSOC);
+      foreach ($result as $row) {
+         // Crear el elemento 'usuario'
          $xml->startElement("usuario");
          $xml->writeAttribute('id', $row['id']);
 
@@ -54,34 +56,35 @@ try {
          $xml->startElement("aficiones");
          if ($row['futbol'] != '') {
             $xml->startElement("futbol");
-            $xml->endElement();           
+            $xml->endElement();
          }
          if ($row['baloncesto'] != '') {
             $xml->startElement("baloncesto");
-            $xml->endElement();           
+            $xml->endElement();
          }
          if ($row['balonmano'] != '') {
             $xml->startElement("balonmano");
-            $xml->endElement();           
+            $xml->endElement();
          }
          $xml->endElement();
 
          $xml->startElement("sexo");
          $xml->writeRaw($row['sexo']);
          $xml->endElement();
-         
+
          $xml->startElement("provincia");
          $xml->writeRaw($row['provincia']);
          $xml->endElement();
-         
+
          $xml->startElement("comentarios");
          $xml->writeRaw(html_entity_decode($row['comentarios'], ENT_HTML5, 'UTF-8'));
          $xml->endElement();
-         
+
+         // Finalizar el elemento 'usuario'
          $xml->endElement();
         }
     }
-    
+
    // Cerrar la conexión a la base de datos
    $pdo = null;
 }
@@ -94,7 +97,7 @@ catch(PDOException $e) {
    // exit();
 }
 
-// Finalizar el elemento raíz
+// Finalizar el elemento raíz 'usuarios'
 $xml->endElement();
 
 // Enviar el documento al navegador
