@@ -98,15 +98,18 @@ try {
    $db_sentence->bindParam(':baloncesto', $post_baloncesto, PDO::PARAM_STR);
    $db_sentence->bindParam(':balonmano', $post_balonmano, PDO::PARAM_STR);
    $db_sentence->bindParam(':sexo', $post_sexo, PDO::PARAM_STR);
-   $db_sentence->bindParam(':provincia', $post_provincia, PDO::PARAM_INT);
+   $db_sentence->bindParam(':provincia', $post_provincia, PDO::PARAM_STR);
    $db_sentence->bindParam(':comentarios', $post_comentarios, PDO::PARAM_STR);
    $db_sentence->execute();
 
+   // Depurar la sentencia ejecutada
+   // $db_sentence->debugDumpParams();
+
    // Comprobar el resultado de la ejecución
-   if ( $db_sentence->errorCode() == 0 ) {
+   $db_error = $db_sentence->errorInfo();
+   if ( $db_error[0] === '00000' ) {
       echo '<div class="alert alert-success" role="alert">Datos insertados correctamente</div>';
    } else {
-      $db_error = $db_sentence->errorInfo();
       echo '<div class="alert alert-danger" role="alert">Error al insertar los datos: ' . $db_error[2] . '</div>';
    }
 

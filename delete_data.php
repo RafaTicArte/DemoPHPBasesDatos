@@ -57,16 +57,19 @@ if ( $get_delete_id == '' ) {
       $db_sentence->bindParam(':id', $get_delete_id, PDO::PARAM_INT);
       $db_sentence->execute();
 
+      // Depurar la sentencia ejecutada
+      // $db_sentence->debugDumpParams();
+
       // Comprobar el resultado de la ejecución
-      if ( $db_sentence->errorCode() == 0 and $db_sentence->rowCount() >= 1 ) {
+      $db_error = $db_sentence->errorInfo();
+      if ( $db_error[0] === '00000' and $db_sentence->rowCount() >= 1 ) {
          // No hay errores y se han eliminado una fila o más
          echo '<div class="alert alert-success" role="alert">Datos eliminados correctamente</div>';
-      } else if ( $db_sentence->errorCode() == 0 and $db_sentence->rowCount() == 0 ) {
+      } else if ( $db_error[0] === '00000' and $db_sentence->rowCount() == 0 ) {
          // No hay errores pero no se han eliminado filas
-         echo '<div class="alert alert-danger" role="alert">Ese dato no existe en la base de datos</div>';
+         echo '<div class="alert alert-danger" role="alert">No existe en la base de datos</div>';
       } else {
-         // Erores en la sentencia
-         $db_error = $db_sentence->errorInfo();
+         // Cualquier otro error
          echo '<div class="alert alert-danger" role="alert">Error al eliminar los datos: ' . $db_error[2] . '</div>';
       }
 
